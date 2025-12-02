@@ -24,39 +24,37 @@ jobs:
       - name: Build
         run: npm run build
       
-      - name: Install IPFS Kubo
-        run: |
-          wget https://dist.ipfs.tech/kubo/v0.24.0/kubo_v0.24.0_linux-amd64.tar.gz
-          tar -xvzf kubo_v0.24.0_linux-amd64.tar.gz
-          cd kubo
-          sudo bash install.sh
-          ipfs --version
+      - name: Install Pinata SDK
+        run: npm install -g pinata-web3
       
-      - name: Initialize IPFS
-        run: |
-          ipfs init
-          ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
-      
-      - name: Add to IPFS and Pin to Pinata
+      - name: Upload to Pinata using SDK
         id: pinata
         env:
-          PINATA_API_KEY: ${{ secrets.PINATA_API_KEY }}
-          PINATA_SECRET: ${{ secrets.PINATA_SECRET }}
+          PINATA_JWT: ${{ secrets.PINATA_JWS }}
         run: |
-          # Add directory to IPFS locally to get CID
-          CID=$(ipfs add -r -Q build)
-          echo "Local CID: $CID"
+          # Create a Node script to upload
+          cat > upload.js << 'EOF'
+          const { PinataSDK } = require("pinata-web3");
+          const fs = require("fs");
+          const path = require("path");
+
+          const pinata = new PinataSDK({
+            pinataJwt: process.env.PINATA_JWT
+          });
+
+          async function upload() {
+            const upload = await pinata.upload.directory("./build");
+            console.log("CID:", upload.IpfsHash);
+            fs.writeFileSync("cid.txt", upload.IpfsHash);
+          }
+
+          upload().catch(console.error);
+          EOF
           
-          # Pin the CID to Pinata
-          RESPONSE=$(curl -X POST "https://api.pinata.cloud/pinning/pinByHash" \
-            -H "Content-Type: application/json" \
-            -H "pinata_api_key: $PINATA_API_KEY" \
-            -H "pinata_secret_api_key: $PINATA_SECRET" \
-            -d "{\"hashToPin\":\"$CID\",\"pinataMetadata\":{\"name\":\"blog-$(date +%Y%m%d-%H%M%S)\"}}")
-          
+          node upload.js
+          CID=$(cat cid.txt)
           echo "hash=$CID" >> $GITHUB_OUTPUT
-          echo "Pinata response: $RESPONSE"
-          echo "CID: $CID"
+          echo "Uploaded with CID: $CID"
           
       - name: Show Deployment Info
         run: |
