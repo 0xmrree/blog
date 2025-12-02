@@ -1,0 +1,41 @@
+name: Deploy to IPFS via Pinata
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Pin to IPFS (Pinata)
+        id: pinata
+        uses: aquiladev/ipfs-action@v1
+        with:
+          path: ./build
+          service: pinata
+          pinataKey: ${{ secrets.PINATA_API_KEY }}
+          pinataSecret: ${{ secrets.PINATA_SECRET }}
+          
+      - name: Show CID
+        run: |
+          echo "🎉 Deployed to IPFS!"
+          echo "CID: ${{ steps.pinata.outputs.hash }}"
+          echo "View at: https://gateway.pinata.cloud/ipfs/${{ steps.pinata.outputs.hash }}"
+          echo "Or: ipfs://${{ steps.pinata.outputs.hash }}"
