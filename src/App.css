@@ -1,6 +1,7 @@
+/* Global Styles */
 .App {
   min-height: 100vh;
-  background: #0a0a0f;
+  background: #0a0e1a;
   position: relative;
 }
 
@@ -11,26 +12,185 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at 30% 20%, rgba(138, 43, 226, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 70% 60%, rgba(65, 105, 225, 0.08) 0%, transparent 50%);
+  background: radial-gradient(circle at 30% 20%, rgba(30, 100, 200, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 70% 60%, rgba(50, 120, 220, 0.05) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
 
+/* Header Styles */
+.header {
+  position: relative;
+  z-index: 1;
+  padding: 3rem 2rem 2rem;
+  border-bottom: 1px solid rgba(70, 130, 220, 0.15);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.profile-image-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(70, 130, 220, 0.3);
+  box-shadow: 0 0 20px rgba(70, 130, 220, 0.2);
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: rgba(70, 130, 220, 0.95);
+}
+
+.profile-title {
+  font-size: 0.95rem;
+  color: rgba(70, 130, 220, 0.7);
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+.profile-description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(200, 210, 230, 0.6);
+  max-width: 500px;
+}
+
+/* Main Content */
 .main-content {
   position: relative;
   z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 3rem 2rem;
 }
 
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+/* Section Styles */
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: rgba(70, 130, 220, 0.9);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(70, 130, 220, 0.15);
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Item Card Styles */
+.item-card {
+  background: rgba(15, 25, 40, 0.4);
+  border: 1px solid rgba(70, 130, 220, 0.15);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.item-card:hover {
+  border-color: rgba(70, 130, 220, 0.3);
+  background: rgba(15, 25, 40, 0.6);
+}
+
+.item-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: rgba(200, 210, 230, 0.9);
+}
+
+.item-meta {
+  font-size: 0.8rem;
+  color: rgba(70, 130, 220, 0.6);
+  margin-bottom: 0.8rem;
+}
+
+.item-description {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(200, 210, 230, 0.6);
+}
+
+/* Show More Button */
+.show-more-container {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.show-more-btn {
+  background: transparent;
+  border: 1px solid rgba(70, 130, 220, 0.3);
+  color: rgba(70, 130, 220, 0.8);
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.show-more-btn:hover {
+  border-color: rgba(70, 130, 220, 0.5);
+  background: rgba(70, 130, 220, 0.1);
+}
+
+/* Footer */
 .footer {
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 3rem 2rem;
-  color: rgba(224, 224, 232, 0.5);
-  font-size: 0.9rem;
-  border-top: 1px solid rgba(138, 43, 226, 0.1);
+  padding: 2rem;
+  color: rgba(200, 210, 230, 0.4);
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(70, 130, 220, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .profile-section {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .profile-description {
+    max-width: 100%;
+  }
 }

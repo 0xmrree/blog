@@ -9,11 +9,13 @@ function App() {
     <div className="App">
       <Header />
       <main className="main-content">
-        <Projects />
-        <Articles />
+        <div className="content-grid">
+          <Projects />
+          <Articles />
+        </div>
       </main>
       <footer className="footer">
-        <p>© 2025 Personal Blog. Crafted with passion.</p>
+        <p>© MMXXV</p>
       </footer>
     </div>
   );

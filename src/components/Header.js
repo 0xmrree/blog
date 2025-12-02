@@ -1,5 +1,4 @@
 import React from 'react';
-import './Header.css';
 
 function Header() {
   return (
@@ -8,19 +7,16 @@ function Header() {
         <div className="profile-section">
           <div className="profile-image-wrapper">
             <img 
-              src="https://via.placeholder.com/150/8A2BE2/FFFFFF?text=JP" 
+              src="profile.png" 
               alt="Profile" 
               className="profile-image"
             />
-            <div className="glow-ring"></div>
           </div>
           <div className="profile-info">
-            <h1 className="profile-name">John Patchen</h1>
-            <p className="profile-title">Full Stack Developer & Creative Technologist</p>
+            <h1 className="profile-name">Mr Ree</h1>
+            <p className="profile-title">Software Engineer</p>
             <p className="profile-description">
-              Passionate about building elegant solutions to complex problems. 
-              Specializing in modern web technologies, cloud architecture, and 
-              creating delightful user experiences. Always learning, always building.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
           </div>
         </div>
