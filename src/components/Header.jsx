@@ -1,3 +1,5 @@
+import profileImage from '../assets/mrree_0.png'
+
 function Header() {
   return (
     <header className="header">
@@ -5,7 +7,7 @@ function Header() {
         <div className="profile-section">
           <div className="profile-image-wrapper">
             <img 
-              src="mrree_0.png" 
+              src={profileImage} 
               alt="Profile" 
               className="profile-image"
             />
