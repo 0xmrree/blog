@@ -24,8 +24,8 @@ jobs:
       - name: Build
         run: npm run build
       
-      - name: Install Pinata SDK
-        run: npm install -g pinata-web3
+      - name: Install Pinata SDK locally
+        run: npm install pinata-web3
       
       - name: Upload to Pinata using SDK
         id: pinata
@@ -36,7 +36,6 @@ jobs:
           cat > upload.js << 'EOF'
           const { PinataSDK } = require("pinata-web3");
           const fs = require("fs");
-          const path = require("path");
 
           const pinata = new PinataSDK({
             pinataJwt: process.env.PINATA_JWT
