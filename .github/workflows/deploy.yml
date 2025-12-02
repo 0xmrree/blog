@@ -15,45 +15,57 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '22'
           cache: 'npm'
       
       - name: Install dependencies
         run: npm ci
       
-      - name: Build
+      - name: Build single HTML file
         run: npm run build
       
-      - name: Install Pinata SDK locally
+      - name: Install Pinata SDK
         run: npm install pinata-web3
       
-      - name: Upload to Pinata using SDK
+      - name: Upload to IPFS via Pinata
         id: pinata
         env:
-          PINATA_JWT: ${{ secrets.PINATA_JWT }}
+          PINATA_JWT: ${{ secrets.PINATA_JWS }}
         run: |
-          # Create a Node script to upload
           cat > upload.mjs << 'EOF'
           import { PinataSDK } from "pinata-web3";
           import fs from "fs";
-
+          
           const pinata = new PinataSDK({
-            pinataJwt: process.env.PINATA_JWT
+            pinataJwt: process.env.PINATA_JWT,
+            pinataGateway: "gateway.pinata.cloud"
           });
-
-          async function upload() {
-            const upload = await pinata.upload.directory("./build");
-            console.log("Upload result:", upload);
-            fs.writeFileSync("cid.txt", upload.IpfsHash);
+          
+          async function main() {
+            try {
+              // Read the built HTML file
+              const fileBuffer = fs.readFileSync("./dist/index.html");
+              const file = new File([fileBuffer], "index.html", { type: "text/html" });
+              
+              // Upload to Pinata
+              const upload = await pinata.upload.file(file);
+              console.log("Upload successful!");
+              console.log("CID:", upload.IpfsHash);
+              
+              // Save CID to file for next step
+              fs.writeFileSync("cid.txt", upload.IpfsHash);
+            } catch (error) {
+              console.error("Upload failed:", error);
+              process.exit(1);
+            }
           }
-
-          upload().catch(console.error);
+          
+          await main();
           EOF
           
           node upload.mjs
           CID=$(cat cid.txt)
           echo "hash=$CID" >> $GITHUB_OUTPUT
-          echo "Uploaded with CID: $CID"
           
       - name: Show Deployment Info
         run: |
