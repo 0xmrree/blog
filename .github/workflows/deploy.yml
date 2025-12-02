@@ -24,24 +24,34 @@ jobs:
       - name: Build
         run: npm run build
       
-      - name: Create tarball of build
-        run: tar -czf build.tar.gz -C build .
-        
-      - name: Upload to Pinata via API
+      - name: Install IPFS Kubo
+        run: |
+          wget https://dist.ipfs.tech/kubo/v0.24.0/kubo_v0.24.0_linux-amd64.tar.gz
+          tar -xvzf kubo_v0.24.0_linux-amd64.tar.gz
+          cd kubo
+          sudo bash install.sh
+          ipfs --version
+      
+      - name: Add to IPFS and Pin to Pinata
         id: pinata
         env:
-          PINATA_JWT: ${{ secrets.PINATA_JWT }}
+          PINATA_API_KEY: ${{ secrets.PINATA_API_KEY }}
+          PINATA_SECRET: ${{ secrets.PINATA_SECRET }}
         run: |
-          # Upload tarball to Pinata
-          RESPONSE=$(curl -X POST "https://api.pinata.cloud/pinning/pinFileToIPFS" \
-            -H "Authorization: Bearer $PINATA_JWT" \
-            -F "file=@build.tar.gz" \
-            -F "pinataMetadata={\"name\":\"blog-$(date +%Y%m%d-%H%M%S)\"}")
+          # Add directory to IPFS locally to get CID
+          CID=$(ipfs add -r -Q build)
+          echo "Local CID: $CID"
           
-          # Extract CID from response
-          CID=$(echo $RESPONSE | jq -r '.IpfsHash')
+          # Pin the CID to Pinata
+          RESPONSE=$(curl -X POST "https://api.pinata.cloud/pinning/pinByHash" \
+            -H "Content-Type: application/json" \
+            -H "pinata_api_key: $PINATA_API_KEY" \
+            -H "pinata_secret_api_key: $PINATA_SECRET" \
+            -d "{\"hashToPin\":\"$CID\",\"pinataMetadata\":{\"name\":\"blog-$(date +%Y%m%d-%H%M%S)\"}}")
+          
           echo "hash=$CID" >> $GITHUB_OUTPUT
-          echo "Uploaded with CID: $CID"
+          echo "Pinata response: $RESPONSE"
+          echo "CID: $CID"
           
       - name: Show Deployment Info
         run: |
