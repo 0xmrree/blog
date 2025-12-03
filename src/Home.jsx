@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import './App.css'
+import { images } from './assets/images'
 
 function Home() {
   return (
@@ -7,7 +8,7 @@ function Home() {
       {/* Header */}
       <header className="header">
         <div className="header-content">
-          <img src="/profile.png" alt="Profile" className="profile-pic" />
+          <img src={images.profile} alt="Profile" className="profile-pic" />
           <div className="header-text">
             <h1 className="name">MrRee.eth (Joe Patchen)</h1>
             <p className="title">Software Engineer</p>

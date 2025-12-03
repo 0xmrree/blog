@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import '../Article.css'
 import ImageRow from '../ImageRow'
+import { images } from '../assets/images'
 
 function EthereumSimulator() {
   const maxSizeForRegularImages = 800
@@ -30,7 +31,7 @@ function EthereumSimulator() {
 
           <ImageRow 
             images={{ 
-              src: '/eth-sim/main.png', 
+              src: images.ethSim.main, 
               alt: 'Ethereum simulator running four nodes',
               aspectRatio: 16/9 
             }}
@@ -53,7 +54,7 @@ function EthereumSimulator() {
           <ImageRow 
             maxSize={maxSizeForRegularImages}
             images={{ 
-            src: '/eth-sim/tree1.png', 
+            src: images.ethSim.tree1, 
             alt: 'a',
             aspectRatio: 16/9 
           }} />
@@ -61,7 +62,7 @@ function EthereumSimulator() {
           <ImageRow 
           maxSize={maxSizeForRegularImages}
           images={{ 
-            src: '/eth-sim/tree2.png', 
+            src: images.ethSim.tree2, 
             alt: 'a',
             aspectRatio: 16/9 
           }}
@@ -74,7 +75,7 @@ function EthereumSimulator() {
 
           <ImageRow 
           maxSize={maxSizeForRegularImages}images={{ 
-            src: '/eth-sim/tree3.png', 
+            src: images.ethSim.tree3, 
             alt: 'a',
             aspectRatio: 16/9 
           }} />
@@ -87,7 +88,7 @@ function EthereumSimulator() {
           <ImageRow
           maxSize={maxSizeForRegularImages}
           images={{ 
-            src: '/eth-sim/beacon1.png', 
+            src: images.ethSim.beacon1, 
             alt: 'a',
             aspectRatio: 16/9 
           }} />
@@ -98,7 +99,7 @@ function EthereumSimulator() {
 
           <ImageRow
           maxSize={maxSizeForRegularImages} images={{ 
-            src: '/eth-sim/beacon2.png', 
+            src: images.ethSim.beacon2, 
             alt: 'a',
             aspectRatio: 16/9 
           }} />
@@ -109,7 +110,7 @@ function EthereumSimulator() {
 
           <ImageRow
           maxSize={maxSizeForRegularImages} images={{ 
-            src: '/eth-sim/beacon3.png', 
+            src: images.ethSim.beacon3, 
             alt: 'a',
             aspectRatio: 16/9 
           }} />
@@ -121,12 +122,12 @@ function EthereumSimulator() {
 
           <ImageRow
            images={[{ 
-            src: '/eth-sim/worldstate.png', 
+            src: images.ethSim.worldstate, 
             alt: 'a',
             aspectRatio: 16/9 
           },
           { 
-            src: '/eth-sim/worldstate2.png', 
+            src: images.ethSim.worldstate2, 
             alt: 'a',
             aspectRatio: 16/9 
           }]} />
@@ -140,15 +141,15 @@ function EthereumSimulator() {
           
           images={[
             { 
-              src: '/eth-sim/epm1.png', 
+              src: images.ethSim.epm1, 
               aspectRatio: 16/9 
             },
             { 
-              src: '/eth-sim/epm2.png', 
+              src: images.ethSim.epm2, 
               aspectRatio: 16/9 
             },
             { 
-              src: '/eth-sim/epm3.png', 
+              src: images.ethSim.epm3, 
               aspectRatio: 16/9 
             },
           ]} />
@@ -161,15 +162,15 @@ The block setup is pretty simple given we have a single chain for both the beaco
           <ImageRow
            images={[
             { 
-              src: '/eth-sim/block1.png', 
+              src: images.ethSim.block1, 
               aspectRatio: 16/9 
             },
             { 
-              src: '/eth-sim/block2.png', 
+              src: images.ethSim.block2, 
               aspectRatio: 16/9 
             },
             { 
-              src: '/eth-sim/block3.png', 
+              src: images.ethSim.block3, 
               aspectRatio: 16/9 
             },
           ]} />
