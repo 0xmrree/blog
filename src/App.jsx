@@ -1,23 +1,16 @@
-import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
-import Header from './components/Header'
-import Projects from './components/Projects'
-import Articles from './components/Articles'
+import Home from './Home'
+import EthereumSimulator from './articles/EthereumSimulator'
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <main className="main-content">
-        <div className="content-grid">
-          <Projects />
-          <Articles />
-        </div>
-      </main>
-      <footer className="footer">
-        <p>© MMXXV</p>
-      </footer>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/articles/ethereum-simulator" element={<EthereumSimulator />} />
+      </Routes>
+    </Router>
   )
 }
 
